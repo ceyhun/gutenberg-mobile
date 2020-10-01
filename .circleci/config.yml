@@ -109,8 +109,11 @@ jobs:
             echo 'export TEST_RN_PLATFORM=android' >> $BASH_ENV
             echo 'export TEST_ENV=sauce' >> $BASH_ENV
       - run:
-          name: Bundle Android and Generate debug .apk file for testing
-          command: npm run test:e2e:bundle:android && npm run test:e2e:build-app:android
+          name: Bundle Android 30 times
+          command: for i in $(seq 1 30); do npm run clean && npm run test:e2e:bundle:android zsh -i -c exit; done 
+      - run:
+          name: Generate debug .apk file for testing
+          command: npm run test:e2e:build-app:android
       - run:
           name: Upload apk to sauce labs
           command: |
